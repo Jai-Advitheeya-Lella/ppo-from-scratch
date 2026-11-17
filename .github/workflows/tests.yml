@@ -1,0 +1,26 @@
+name: tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  pytest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install CPU PyTorch
+        run: pip install torch --index-url https://download.pytorch.org/whl/cpu
+      - name: Install test dependencies
+        # Box2D / MuJoCo / Stable-Baselines3 are only needed for the experiments; their tests are skipped in CI.
+        run: pip install numpy gymnasium pytest
+      - name: Run tests
+        run: pytest -q
+        env:
+          CI: "true"
