@@ -2,7 +2,10 @@
 __pycache__/
 *.egg-info/
 .pytest_cache/
-runs/
+runs/**/model.pt
+runs/**/updates.csv
+runs/**/train.log
+runs_*.log
 *.pt
 MUJOCO_LOG.TXT
 .ipynb_checkpoints/

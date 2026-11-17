@@ -139,7 +139,7 @@ class PPOTrainer:
 
     def _env_action(self, actions: Tensor) -> np.ndarray:
         a = actions.numpy()
-        if self.continuous:  # sample is unclipped for log-probs; clip only what the env sees (detail #4)
+        if self.continuous:  # the sample stays unclipped for log-probs; only the env sees the clipped action
             a = np.clip(a, self.act_low, self.act_high)
         return a
 
@@ -233,7 +233,7 @@ class PPOTrainer:
         update_rows: list[dict[str, float]] = []
         t0 = time.time()
         for update in range(1, num_updates + 1):
-            if cfg.anneal_lr:  # linear decay to zero (detail #4)
+            if cfg.anneal_lr:  # linear decay to zero (core detail #4)
                 frac = 1.0 - (update - 1.0) / num_updates
                 self.optimizer.param_groups[0]["lr"] = frac * cfg.learning_rate
             obs = self.collect_rollout(obs, ep_ret, ep_len)

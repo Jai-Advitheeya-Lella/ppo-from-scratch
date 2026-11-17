@@ -64,8 +64,8 @@ class ObsNormalizer:
 class RewardScaler:
     r"""Divides rewards by the running std of the discounted return.
 
-    This is the "reward scaling" of Engstrom et al. (2020) and detail #6 of the
-    continuous-control list in Huang et al. (2022): maintain per-environment
+    This is the "reward scaling" of Engstrom et al. (2020) one of the continuous-control
+    details in Huang et al. (2022): maintain per-environment
     discounted returns :math:`G \leftarrow \gamma G + r`, track their variance,
     and return :math:`r / \sqrt{\mathrm{Var}[G] + \epsilon}` (clipped). The mean is
     *not* subtracted, so the sign of each reward is preserved.
